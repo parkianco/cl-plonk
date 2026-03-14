@@ -24,3 +24,14 @@
      (:file "kzg")
      (:file "plonk")
      (:file "serialization")))))
+
+(asdf:defsystem #:cl-plonk/test
+  :description "Tests for cl-plonk"
+  :depends-on (#:cl-plonk)
+  :serial t
+  :components ((:module "test"
+                :components ((:file "test-plonk"))))
+  :perform (asdf:test-op (o c)
+             (let ((result (uiop:symbol-call :cl-plonk.test :run-tests)))
+               (unless result
+                 (error "Tests failed")))))
